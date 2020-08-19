@@ -1,8 +1,6 @@
-
-# bot.py
 import os
-
 import discord
+
 from discord.ext import commands
 
 from os.path import join, dirname
