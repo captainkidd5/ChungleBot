@@ -3,6 +3,7 @@
 import os
 
 import discord
+from discord.ext import commands
 
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -12,7 +13,7 @@ load_dotenv(dotenv_path)
 
 TOKEN = os.environ.get("TOKEN")
 
-client = discord.Client()
+client = commands.Bot(command_prefix='!chungle ')
 
 @client.event
 async def on_ready():
@@ -24,5 +25,9 @@ async def on_member_join(member):
     await member.dm_channel.send(
         f'Hi {member.name}, welcome to Dev Ex!'
     )
+
+@client.command()
+async def test(ctx):
+    await ctx.send('Hello, world!')
 
 client.run(TOKEN)
