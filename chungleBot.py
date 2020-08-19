@@ -3,10 +3,14 @@
 import os
 
 import discord
+
+from os.path import join, dirname
 from dotenv import load_dotenv
 
-load_dotenv()
-TOKEN = ''
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+TOKEN = os.environ.get("TOKEN")
 
 client = discord.Client()
 
