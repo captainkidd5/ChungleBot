@@ -4,6 +4,7 @@ import json
 import re
 
 from discord.ext import commands, tasks
+from cogs.activity_manager import activity_manager
 
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -14,12 +15,10 @@ load_dotenv(dotenv_path)
 TOKEN = os.environ.get("TOKEN")
 PREFIX = os.environ.get('PREFIX', '!chungle ')
 
-activity_index = 0
-
-with open(join(dirname(__file__), 'config', 'activities.json')) as json_file:
-    activities = json.load(json_file)
-
 client = commands.Bot(command_prefix=PREFIX)
+
+activities_path = join(dirname(__file__), 'config', 'activities.json')
+client.add_cog(activity_manager(client, activities_path))
 
 @client.event
 async def on_ready():
@@ -36,36 +35,5 @@ async def on_member_join(member):
 async def test(ctx):
     await ctx.send('Hello, world!')
 
-@tasks.loop(seconds=5.0)
-async def update_activity():
-
-    global PREFIX
-    global activity_index
-
-    await client.wait_until_ready()
-
-    activity_data = activities[activity_index]
-
-    activity_type = discord.ActivityType[activity_data['type']]
-    activity_message = activity_data['message']
-
-    message_values = {
-        "${guild_count}": str(len(client.guilds)),
-        "${user_count}": str(len(client.users)),
-        "${prefix}": PREFIX
-    }
-
-    # Replace some template placeholders to create a dynamic string
-    replace = dict((re.escape(k), v) for k, v in message_values.items())
-    pattern = re.compile("|".join(replace.keys()))
-
-    activity_message = pattern.sub(lambda m: replace[re.escape(m.group(0))], activity_message)
-    await client.change_presence(activity=discord.Activity(type=activity_type, name=activity_message))
-
-    activity_index += 1
-
-    if activity_index >= len(activities):
-        activity_index = 0
-
-update_activity.start()
+client.get_cog('activity_manager').update.start()
 client.run(TOKEN)
