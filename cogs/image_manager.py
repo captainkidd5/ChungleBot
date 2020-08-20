@@ -12,8 +12,7 @@ class image_manager(commands.Cog):
 
     @commands.command(name='grab',description='Summon Thanos to restore balance to a member in chat')
     async def thanos_command(self,ctx):
-        await ctx.channel.send('Perfectly balanced...')
-        await ctx.channel.send(file=discord.File('images/thanos1.png'))
+        await ctx.channel.send('Perfectly balanced...', file=discord.File('images/thanos1.png'))
         await self.bot.wait_for('message',timeout=30)
         await ctx.channel.send(file=discord.File('images/thanos2.png'))
-        await ctx.channel.send(f'...as {ctx.author.name} should be.')
+        await ctx.channel.send(f'...as <@{ctx.author.id}> should be.')
