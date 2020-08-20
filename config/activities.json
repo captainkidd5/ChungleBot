@@ -1,0 +1,10 @@
+[
+    {
+        "type": "WATCHING",
+        "message": "over ${guild_count} servers!"
+    },
+    {
+        "type": "PLAYING",
+        "message": "the game of life."
+    }
+]
