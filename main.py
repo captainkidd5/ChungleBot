@@ -1,7 +1,4 @@
-import os
-import discord
-import json
-import re
+import os, discord, json, re
 
 from discord.ext import commands, tasks
 from cogs.activity_manager import activity_manager
