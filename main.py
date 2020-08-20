@@ -38,7 +38,10 @@ async def test(ctx):
 
 @tasks.loop(seconds=5.0)
 async def update_activity():
+
+    global PREFIX
     global activity_index
+
     await client.wait_until_ready()
 
     activity_data = activities[activity_index]
@@ -48,7 +51,8 @@ async def update_activity():
 
     message_values = {
         "${guild_count}": str(len(client.guilds)),
-        "${user_count}": str(len(client.users))
+        "${user_count}": str(len(client.users)),
+        "${prefix}": PREFIX
     }
 
     # Replace some template placeholders to create a dynamic string
