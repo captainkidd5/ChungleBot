@@ -38,4 +38,7 @@ async def speak(ctx, *args):
     await ctx.send(' '.join(args))
 
 client.get_cog('activity_manager').update.start()
+client.load_extension('cogs.image_manager')
+client.load_extension('cogs.math')
+
 client.run(TOKEN)
