@@ -6,13 +6,10 @@ class activity_manager(commands.Cog):
         self.bot = bot
         self.activity_data = None
         self.activity_index = 0
-        self.load(file)
 
-    # Loads activities from the JSON configuration file
-    def load(self, file):
+        # Loads activities from the JSON configuration file
         with open(file) as json_file:
             self.activity_data = json.load(json_file)
-            self.activity_index = 0
 
     # Replaces a message's placeholder and returns the new string
     def get_message(self, message):
