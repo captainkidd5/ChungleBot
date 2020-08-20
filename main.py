@@ -1,6 +1,7 @@
 import os
 import discord
 import json
+import re
 
 from discord.ext import commands, tasks
 
@@ -45,10 +46,16 @@ async def update_activity():
     activity_type = discord.ActivityType[activity_data['type']]
     activity_message = activity_data['message']
 
-    # Replace some template placeholders to create a dynamic string
-    activity_message = activity_message.replace('${guild_count}', str(len(client.guilds)))
-    activity_message = activity_message.replace('${user_count}', str(len(client.users)))
+    message_values = {
+        "${guild_count}": str(len(client.guilds)),
+        "${user_count}": str(len(client.users))
+    }
 
+    # Replace some template placeholders to create a dynamic string
+    replace = dict((re.escape(k), v) for k, v in message_values.items())
+    pattern = re.compile("|".join(replace.keys()))
+
+    activity_message = pattern.sub(lambda m: replace[re.escape(m.group(0))], activity_message)
     await client.change_presence(activity=discord.Activity(type=activity_type, name=activity_message))
 
     activity_index += 1
