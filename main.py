@@ -32,5 +32,10 @@ async def on_member_join(member):
 async def test(ctx):
     await ctx.send('Hello, world!')
 
+@client.command()
+async def speak(ctx, *args):
+    await ctx.message.delete()
+    await ctx.send(' '.join(args))
+
 client.get_cog('activity_manager').update.start()
 client.run(TOKEN)
