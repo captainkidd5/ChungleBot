@@ -1,10 +1,10 @@
 [
     {
-        "type": "WATCHING",
-        "message": "over ${guild_count} servers!"
+        "type": "watching",
+        "message": "over ${user_count} users!"
     },
     {
-        "type": "PLAYING",
+        "type": "playing",
         "message": "the game of life."
     }
 ]
