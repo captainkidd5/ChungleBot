@@ -1,0 +1,14 @@
+[
+    {
+        "type": "watching",
+        "message": "over ${user_count} users!"
+    },
+    {
+        "type": "playing",
+        "message": "the game of life."
+    },
+    {
+        "type": "listening",
+        "message": "${prefix}"
+    }
+]
